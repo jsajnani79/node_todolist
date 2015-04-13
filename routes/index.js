@@ -9,6 +9,23 @@ var fs = require('fs');
 
 // module.exports = router;
 
+// function readJSONFile(filename, callback) {
+//   fs.readFile(filename, function (err, data) {
+//     if(err) {
+//       callback(err);
+//       return;
+//     }
+//     try {
+//       callback(null, JSON.parse(data));
+//     } catch(exception) {
+//       callback(exception);
+//     }
+//   });
+// }
+
+
+
+
 exports.lists = {}
 
 exports.lists.all = function(req,res){
