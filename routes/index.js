@@ -1,9 +1,32 @@
 var express = require('express');
 var router = express.Router();
+var fs = require('fs');
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
-});
+// /* GET home page. */
+// router.get('/', function(req, res, next) {
+//   res.render('index', { title: 'Express' });
+// });
 
-module.exports = router;
+// module.exports = router;
+
+exports.lists = {}
+
+exports.lists.all = function(req,res){
+  var file = fs.readFile('data.json', function(err, data) {
+  	if(err) return; //FIX
+    res.json(JSON.parse(data));
+  });
+};
+
+exports.lists.one = function(req,res){
+	var listId = req.params.id;
+	var file = fs.readFile('data.json', function(err, data) {
+  		if(err) return; //FIX
+  		var obj = JSON.parse(data);
+  		var result = obj.filter(function(obj) {
+  			return (obj['id'] == listId);
+  		})[0];
+    	res.json(result);
+  	});
+
+ }; 
