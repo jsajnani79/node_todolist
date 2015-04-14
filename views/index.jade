@@ -11,6 +11,18 @@ block content
 	script(id="listtemplate", type="text/x-handlebars")
 		<a href="#" class="name"> {{ name }} </a>
 
+	script(id="listitemtemplate", type="text/x-handlebars")
+		<div class="view">
+			<input class="toggle" type="checkbox" checked="checked" />
+			<label>{{ value }}</label>
+			<a class="destroy"></a>
+		</div>
+		<input class="edit" type="text" value="{{ value }}" />
+
+
 	script(id="detailedlisttemplate", type="text/x-handlebars")
 		<h2>{{name}}</h2>
 		<p>{{id}}</p>
+		<input type="text" id="firstname" placeholder="First Name"><br/>
+
+

@@ -7,6 +7,7 @@ define(["backbone", "views/list"], function(Backbone, ListView) {
     className: "lists",
     render: function() {
       this.$el.html("");
+      
       this.collection.each(function(list) {
         var listView = new ListView({ model: list });
         this.$el.append(listView.render().el);
