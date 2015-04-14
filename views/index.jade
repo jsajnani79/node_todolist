@@ -1,5 +1,12 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+	h1 Backbone App
+
+	div#initialContent
+		= appData
+
+	div.app
+	
+	script(id="listtemplate", type="text/x-handlebars")
+		{{ name }}

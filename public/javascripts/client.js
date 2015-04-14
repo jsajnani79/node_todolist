@@ -48,9 +48,12 @@ var AppRouter = Backbone.Router.extend({
 		var data = $("#initialContent").html();
 		this.collection = new ListCollection(JSON.parse(data));
 	},
+	_renderView: function(view){
+		$(".app").html(view.render().el);
+	},
 	index: function(){
 		var view = new ListCollectionView({collection: this.collection});
-		$(".app").html(view.render().el);
+		this._renderView(view);
 	},
 	singleList: function(id){
 

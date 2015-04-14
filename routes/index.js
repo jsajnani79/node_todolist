@@ -2,37 +2,39 @@ var express = require('express');
 var router = express.Router();
 var fs = require('fs');
 
-// /* GET home page. */
-// router.get('/', function(req, res, next) {
-//   res.render('index', { title: 'Express' });
-// });
+// var getData = function(filename, callback){
+// 	console.log('called getData');
+// 	fs.readFile(filename, function(err, data) {
+//   		if(err) return; //FIX
+//   		var obj = JSON.parse(data);
+//   		callback(obj);
+//   	});
+// };
 
-// module.exports = router;
+// var callback = function(data){
+// 	console.log("data", data);
+// };
 
-// function readJSONFile(filename, callback) {
-//   fs.readFile(filename, function (err, data) {
-//     if(err) {
-//       callback(err);
-//       return;
-//     }
-//     try {
-//       callback(null, JSON.parse(data));
-//     } catch(exception) {
-//       callback(exception);
-//     }
-//   });
-// }
-
-
-
-
+exports.index = function(req,res){
+	var file = fs.readFile('data.json', function(err, data) {
+  		if(err) return; //FIX
+  		// var obj = .parse(data);
+    	res.render("index", {
+    		appData: data
+    	});
+  	});
+};
 exports.lists = {}
 
 exports.lists.all = function(req,res){
   var file = fs.readFile('data.json', function(err, data) {
   	if(err) return; //FIX
-    res.json(JSON.parse(data));
+  	var obj = JSON.parse(data);
+    res.json(obj);
   });
+	// var response = getData('data.json', callback);
+	// console.log(response);
+	// res.json("hello");
 };
 
 exports.lists.one = function(req,res){
@@ -47,3 +49,25 @@ exports.lists.one = function(req,res){
   	});
 
  }; 
+
+ exports.lists.create = function(req, res){
+
+// read file then, 
+	// var obj = JSON.parse(data);
+ //  	obj.push({
+ //  		"name": "Todo List 17", 
+	// 	"id": 200,
+	// 	"items": [{"value": "First Item", "checked": false}, {"value": "Second Item", "checked": false}]
+ //  	});
+ //  	var txt = JSON.stringify(obj);
+ //  	console.log(txt);
+ //  	var filePath = __dirname + '/../data.json';
+ //  	fs.writeFile(filePath, txt, function(err, txt){
+ //  		if (err){
+ //  			return console.log(err); //FIX
+ //  		}
+ //  	});
+
+ 	res.json(req.body);
+
+ };

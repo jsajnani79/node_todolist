@@ -21,9 +21,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// app.use('/', routes);
-
-// app.get('/', routes.index);
+app.get('/', routes.index);
 app.get('/lists', routes.lists.all);
 app.get('/lists/:id', routes.lists.one);
 app.post('/lists', routes.lists.create);
