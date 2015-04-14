@@ -1,7 +1,7 @@
 extends layout
 
 block content
-	h1 Backbone App
+	h1 TODO
 
 	div#initialContent
 		= appData
@@ -9,4 +9,8 @@ block content
 	div.app
 	
 	script(id="listtemplate", type="text/x-handlebars")
-		{{ name }}
+		<a href="#" class="name"> {{ name }} </a>
+
+	script(id="detailedlisttemplate", type="text/x-handlebars")
+		<h2>{{name}}</h2>
+		<p>{{id}}</p>
