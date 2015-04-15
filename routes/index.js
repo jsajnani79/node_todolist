@@ -18,7 +18,6 @@ var fs = require('fs');
 exports.index = function(req,res){
 	var file = fs.readFile('data.json', function(err, data) {
   		if(err) return; //FIX
-  		// var obj = .parse(data);
     	res.render("index", {
     		appData: data
     	});
@@ -32,9 +31,6 @@ exports.lists.all = function(req,res){
   	var obj = JSON.parse(data);
     res.json(obj);
   });
-	// var response = getData('data.json', callback);
-	// console.log(response);
-	// res.json("hello");
 };
 
 exports.lists.one = function(req,res){
@@ -47,8 +43,49 @@ exports.lists.one = function(req,res){
   		})[0];
     	res.json(result);
   	});
-
  }; 
+
+exports.tasks = {}
+exports.tasks.all = function(req,res){
+  var listId = req.params.id;
+  var file = fs.readFile('data.json', function(err, data) {
+      if(err) return; //FIX
+      var obj = JSON.parse(data);
+      var result = obj.filter(function(obj) {
+        return (obj['id'] == listId);
+      })[0]["items"];
+      res.json(result);
+    });
+ }; 
+
+exports.tasks.one = function(req,res){
+  var listId = req.params.id;
+  var taskId = req.params.task_id;
+  // console.log(listId, "task:",taskId);
+  var file = fs.readFile('data.json', function(err, data) {
+      if(err) return; //FIX
+      var obj = JSON.parse(data);
+      var result = obj.filter(function(obj) {
+        return (obj['id'] == listId);
+      })[0]["items"];
+
+      result = result.filter(function(result) {
+        return (result['id'] == taskId);
+      })[0];
+      res.json(result);
+    });
+ }; 
+
+exports.tasks.create = function(req, res){
+  console.log("POST TASK CALLED");
+  res.send(req);
+  // console.log("request: ", req);
+};
+
+exports.tasks.one.create = function(req, res){
+  console.log("POST SINGLE TASK CALLED");
+  // console.log("request: ", req);
+};
 
  exports.lists.create = function(req, res){
 
@@ -67,7 +104,7 @@ exports.lists.one = function(req,res){
  //  			return console.log(err); //FIX
  //  		}
  //  	});
-
  	res.json(req.body);
-
  };
+
+
