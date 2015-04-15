@@ -13,16 +13,57 @@ block content
 
 	script(id="listitemtemplate", type="text/x-handlebars")
 		<div class="view">
-			<input class="toggle" type="checkbox" checked="checked" />
-			<label>{{ value }}</label>
-			<a class="destroy"></a>
+		<input class="toggle" type="checkbox" checked="checked" />
+		<label>{{ value }}</label>
+		<a class="destroy"></a>
 		</div>
 		<input class="edit" type="text" value="{{ value }}" />
 
-
-	script(id="detailedlisttemplate", type="text/x-handlebars")
+	script(id="tasks-container", type="text/x-handlebars")
 		<h2>{{name}}</h2>
 		<p>{{id}}</p>
+		{{#each items}}
+		<li>{{> task}}</li>
+		{{/each}}
 		<input type="text" id="firstname" placeholder="First Name"><br/>
 
+	script(id="task-partial", type="text/x-handlebars")
+		<div class="task">
+		<div class="view">
+		<input class="toggle" type="checkbox" {{isChecked checked}} />
+		<label>{{name}}</label>
+		<a class="destroy"></a>\
+		</div>
+		<input class="edit" type="text" value="{{name}}" />
+		</div>
 
+	script(id="tasktemplate", type="text/x-handlebars")
+		<div class="task">
+		<div class="view">
+		<input class="toggle" type="checkbox" {{isChecked checked}} />
+		<label>{{name}}</label>
+		<a class="destroy"></a>\
+		</div>
+		<input class="edit" type="text" value="{{name}}" />
+		</div>
+
+	script(id="detailedlisttemplate", type="text/x-handlebars")
+		<div id="todoapp">
+		<header>
+		<h1>Todos</h1>
+		<input id="new-todo" type="text" placeholder="What needs to be done?">
+		</header>
+		<section id="main">
+		<input id="toggle-all" type="checkbox">
+		<label for="toggle-all">Mark all as complete</label>
+		<ul id="todo-list">
+		{{#each items}}
+		<li>{{> task}}</li>
+		{{/each}}
+		</ul>
+		</section>
+		<footer>
+		<a id="clear-completed">Clear completed</a>
+		<div id="todo-count"></div>
+		</footer>
+		</div>
