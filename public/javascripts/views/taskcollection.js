@@ -108,7 +108,6 @@ define(["backbone", "handlebars", "views/task"], function(Backbone, Handlebars, 
           // console.log(form);
           // // Save to the server.
           form.submit();
-          // this.render;
           return false;
       }
 

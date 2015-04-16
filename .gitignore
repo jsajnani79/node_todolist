@@ -1,2 +1,3 @@
 #exclude data files from source control
 /data.json
+*.env
