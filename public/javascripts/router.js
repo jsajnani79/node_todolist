@@ -11,7 +11,8 @@ define(["backbone", "events", "collections/list", "views/listcollection", "views
     routes: {
       "": "index",
       "lists/:id": "singleList", 
-      "lists/:id/tasks": "singleTodo"
+      "lists/:id/tasks": "singleTodo",
+      "new/:id": "newList"
       // "lists/103/tasks": "singleTodo"
     },
     _setupCollection: function() {
@@ -34,6 +35,12 @@ define(["backbone", "events", "collections/list", "views/listcollection", "views
       var listCollection = new ListCollection();
       listCollection.fetch({reset:true});
       var view = new ListCollectionView({ collection: listCollection});
+      this._renderView(view);
+    },
+    newList: function(id){
+      console.log("CALLED NEW LIST");
+      var todoCollection = new TaskCollection([], {'listId': id});
+      var view = new TaskCollectionView({collection: todoCollection});
       this._renderView(view);
     },
     singleTodo: function(id) {

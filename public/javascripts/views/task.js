@@ -18,6 +18,10 @@ define(["backbone", "handlebars", "jquery", "underscore"], function(Backbone, Ha
     render: function() {
       var template = $("#tasktemplate").html();
       var compiled = Handlebars.compile(template);
+      Handlebars.registerHelper("isChecked", function(checked) {
+        if(checked) return "checked = \"checked\"";
+        else return "";
+      });
       var html = compiled(this.model.attributes);
       this.$el.html(html);
       this.input = this.$el.find('.edit');

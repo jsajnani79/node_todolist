@@ -11,36 +11,21 @@ block content
 	script(id="listtemplate", type="text/x-handlebars")
 		<a href="#" class="name"> {{ name }} </a>
 
-	script(id="listitemtemplate", type="text/x-handlebars")
-		<div class="view">
-		<input class="toggle" type="checkbox" checked="checked" />
-		<label>{{ value }}</label>
-		<a class="destroy"></a>
-		</div>
-		<input class="edit" type="text" value="{{ value }}" />
-
-	script(id="tasks-container", type="text/x-handlebars")
-		<h2>{{name}}</h2>
-		<p>{{id}}</p>
-		{{#each items}}
-		<li>{{> task}}</li>
-		{{/each}}
-		<input type="text" id="firstname" placeholder="First Name"><br/>
-
-	script(id="task-partial", type="text/x-handlebars")
-		<div class="task">
-		<div class="view">
-		<input class="toggle" type="checkbox" {{isChecked checked}} />
-		<label>{{name}}</label>
-		<a class="destroy"></a>\
-		</div>
-		<input class="edit" type="text" value="{{name}}" />
+	script(id="listindextemplate", type="text/x-handlebars")
+		<div id="todoapp">
+		<header> TODO Lists	</header>
+		<section id="main">
+		<ul id="lists"></ul>
+		</section>
+		<footer>
+		<a href="#" class="create"> CREATE </a>		
+		</footer>
 		</div>
 
 	script(id="tasktemplate", type="text/x-handlebars")
 		<div class="task">
 		<div class="view">
-		<input class="toggle" type="checkbox" checked="false" />
+		<input class="toggle" type="checkbox" {{isChecked checked}} />
 		<label>{{taskName}}</label>
 		<a class="destroy"></a>\
 		</div>
@@ -50,13 +35,11 @@ block content
 	script(id="taskcollectiontemplate", type="text/x-handlebars")
 		<div id="todoapp">
 		<header>
-		<input id="new-todo" type="text" value="ToDo List">
+		<h4 id="title"></h4>
 		</br>
 		<input id="new-todo" type="text" placeholder="What needs to be done?">
 		</header>
 		<section id="main">
-		<input id="toggle-all" type="checkbox">
-		<label for="toggle-all">Mark all as complete</label>
 		<ul id="todo-list"></ul>
 		</section>
 		<footer>

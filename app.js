@@ -27,7 +27,6 @@ app.get('/lists/:id', routes.lists.one);
 app.post('/lists', routes.lists.create);
 app.get('/lists/:id/tasks', routes.tasks.all);
 app.get('/lists/:id/tasks/:task_id', routes.tasks.one);
-app.post('/lists/:id/tasks/', routes.tasks.create);
 app.put('/lists/:id/tasks/:task_id', routes.tasks.one.create);
 
 // catch 404 and forward to error handler
