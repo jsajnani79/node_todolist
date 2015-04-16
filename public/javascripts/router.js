@@ -11,16 +11,19 @@ define(["backbone", "events", "collections/list", "views/listcollection", "views
     routes: {
       "": "index",
       "lists/:id": "singleList", 
-      "lists/103/tasks": "singleTodo"
+      "lists/:id/tasks": "singleTodo"
+      // "lists/103/tasks": "singleTodo"
     },
     _setupCollection: function() {
       // if(this.collection) return;
       // var data = $("#initialContent").html();
       // this.collection = new ListCollection(JSON.parse(data));
-      if(this.collection) return;
-      this.collection = new TaskCollection();
-      this.collection.fetch({reset:true});
-      console.log("collection: ", this.collection);
+
+      // if(this.collection) return;//here
+      // this.collection = new TaskCollection();
+      // this.collection.fetch({reset:true});
+      // console.log("collection: ", this.collection);//end
+
       // var data = $("#initialContent").html();
       // this.collection = new ListCollection(JSON.parse(data));
     },
@@ -28,19 +31,22 @@ define(["backbone", "events", "collections/list", "views/listcollection", "views
       $(".app").html(view.render().el);
     },
     index: function() {
-      // var view = new ListCollectionView({ collection: this.collection});
-      // this._renderView(view);
-      var view = new TaskCollectionView({ collection: this.collection});
+      var listCollection = new ListCollection();
+      listCollection.fetch({reset:true});
+      var view = new ListCollectionView({ collection: listCollection});
       this._renderView(view);
     },
-    singleTodo: function() {
+    singleTodo: function(id) {
       // var view = new ListCollectionView({ collection: this.collection});
       // this._renderView(view);
-      console.log("called single todo");
-      var view = new TaskCollectionView({ collection: this.collection});
+      console.log("called single todo, id: ", id);
+      var todoCollection = new TaskCollection([], {'listId': id});
+      todoCollection.fetch({reset:true});
+      var view = new TaskCollectionView({ collection: todoCollection});
       this._renderView(view);
     },
     singleList: function(id) {
+      this.singleTodo(id);
       // var list = this.collection.get(id);
       // var view = new DetailedListView({ model: list });
       // this._renderView(view);
@@ -51,3 +57,16 @@ define(["backbone", "events", "collections/list", "views/listcollection", "views
   });
   return Router;
 });
+
+
+//     "product/:id": "showProduct",
+//     "product/:id/details/:did": "showDetails"
+
+// showProduct: function(id) {
+//     this.showDetails(id);
+// },
+
+// showDetails: function(id, did) {
+//     // Check did for undefined
+
+// }

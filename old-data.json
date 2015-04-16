@@ -1,0 +1,3 @@
+[
+{"name": "List1", "id": 100, "items":[{"name": "first item", "checked": false}, {"name": "second item", "checked": false}]}, {"name": "List2", "id": 200, "items":[{"name": "checked item", "checked": true}, {"name": "second item", "checked": false}]}
+]

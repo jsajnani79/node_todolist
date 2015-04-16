@@ -86,37 +86,38 @@ define(["backbone", "handlebars", "views/task"], function(Backbone, Handlebars, 
 
       saveAll: function() {
           // Create the submission form
-          var form = document.createElement( 'form' );
-          form.setAttribute( "method", 'POST' )
-          form.setAttribute( 'action', '/lists/103/tasks' );
+          console.log("COLLECTION TO BE SAVED: ", this.collection);
+          // var form = document.createElement( 'form' );
+          // form.setAttribute( "method", 'POST' )
+          // form.setAttribute( 'action', '/lists/103/tasks' );
 
-          console.log("EACH")
-          this.collection.each(function(task){console.log(task);});
-          console.log(this.collection.title)
-          console.log("END EACH")
-          // Jsonify all of the models in the collection
-          var itemData = []
-            this.collection.each( function(post) {
-              itemData.push(post.toJSON() );
-          } );
-          // itemData = JSON.stringify( itemData );
-          var formData = [];
-          formData.push({'items': itemData, 'title': this.collection.title});
-          formData = JSON.stringify( formData );
-          console.log("FORMDATA");
-          console.log(formData);
-          console.log("END FORMDATA");
+          // console.log("EACH")
+          // this.collection.each(function(task){console.log(task);});
+          // console.log(this.collection.title)
+          // console.log("END EACH")
+          // // Jsonify all of the models in the collection
+          // var itemData = []
+          //   this.collection.each( function(post) {
+          //     itemData.push(post.toJSON() );
+          // } );
+          // // itemData = JSON.stringify( itemData );
+          // var formData = [];
+          // formData.push({'items': itemData, 'title': this.collection.title});
+          // formData = JSON.stringify( formData );
+          // console.log("FORMDATA");
+          // console.log(formData);
+          // console.log("END FORMDATA");
 
-          // Store the array in a hidden field
-          var hidden = document.createElement( 'input' );
-          hidden.setAttribute( 'type', 'hidden' );
-          hidden.setAttribute( 'name', 'formData' );
-          hidden.setAttribute( 'value', formData );
-          form.appendChild( hidden );
-          console.log(form);
-          // Save to the server.
-          form.submit();
-          this.render;
+          // // Store the array in a hidden field
+          // var hidden = document.createElement( 'input' );
+          // hidden.setAttribute( 'type', 'hidden' );
+          // hidden.setAttribute( 'name', 'formData' );
+          // hidden.setAttribute( 'value', formData );
+          // form.appendChild( hidden );
+          // console.log(form);
+          // // Save to the server.
+          // form.submit();
+          // this.render;
       }
 
 

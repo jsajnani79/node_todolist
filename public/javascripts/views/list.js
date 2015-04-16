@@ -15,7 +15,7 @@ define(["backbone", "handlebars", "jquery", "events"], function(Backbone, Handle
     singleListLink: function(e) {
       e.preventDefault();
       var id = this.model.get("id");
-      var url = "list/" + id;
+      var url = "lists/" + id + "/tasks";
       Events.trigger("router:navigate", url);
     }
   });

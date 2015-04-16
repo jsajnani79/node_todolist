@@ -47,6 +47,10 @@ exports.lists.one = function(req,res){
 
 exports.tasks = {}
 exports.tasks.all = function(req,res){
+
+  console.log("REQ, ", req.params);
+
+
   var listId = req.params.id;
   var file = fs.readFile('data.json', function(err, data) {
       if(err) return; //FIX
