@@ -10,7 +10,8 @@ define(["backbone", "events", "collections/list", "views/listcollection", "views
     },
     routes: {
       "": "index",
-      "lists/:id": "singleList", 
+      "lists/:id": "singleList",
+      // "lists/:id/tasks": "listTasks", 
       "lists/:id/tasks": "singleTodo",
       "new/:id": "newList"
       // "lists/103/tasks": "singleTodo"
@@ -39,27 +40,25 @@ define(["backbone", "events", "collections/list", "views/listcollection", "views
     },
     newList: function(id){
       console.log("CALLED NEW LIST");
-      var todoCollection = new TaskCollection([], {'listId': id});
+      var todoCollection = new TaskCollection([], {'listId': id, 'new': true, 'title': "Your Todo List"});
       var view = new TaskCollectionView({collection: todoCollection});
       this._renderView(view);
     },
     singleTodo: function(id) {
       // var view = new ListCollectionView({ collection: this.collection});
       // this._renderView(view);
-      console.log("called single todo, id: ", id);
+      // console.log("called single todo, id: ", id, "title: ", title);
       var todoCollection = new TaskCollection([], {'listId': id});
       todoCollection.fetch({reset:true});
       var view = new TaskCollectionView({ collection: todoCollection});
       this._renderView(view);
     },
-    singleList: function(id) {
+    listTasks: function(id){
       this.singleTodo(id);
-      // var list = this.collection.get(id);
-      // var view = new DetailedListView({ model: list });
-      // this._renderView(view);
-      // var task = this.collection.get(id);
-      // var view = new DetailedListView({ model: list });
-      // this._renderView(view);
+    },
+    singleList: function(id) {
+      this.listTasks(id);
+      // this.singleTodo(id);
     }
   });
   return Router;

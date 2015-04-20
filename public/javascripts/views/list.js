@@ -3,7 +3,6 @@ define(["backbone", "handlebars", "jquery", "events"], function(Backbone, Handle
     events: {
       "click .name": "singleListLink"
     },
-    tagName: "li",
     className: "list",
     render: function() {
       var template = $("#listtemplate").html();
@@ -15,6 +14,7 @@ define(["backbone", "handlebars", "jquery", "events"], function(Backbone, Handle
     singleListLink: function(e) {
       e.preventDefault();
       var id = this.model.get("id");
+      // var title = this.model.attributes.name;
       var url = "lists/" + id + "/tasks";
       Events.trigger("router:navigate", url);
     }

@@ -8,7 +8,9 @@ define(["backbone", "handlebars", "views/task"], function(Backbone, Handlebars, 
 
     events: {
         "keypress #new-todo":  "createOnEnter",
-        "click #clear-completed": "saveAll",
+        "click #save-tasks": "saveAll",
+        "dblclick .list-title"  : "edit",
+        "keypress .edit-title"  : "updateTitleOnEnter",
         "click #toggle-all": "toggleAllComplete"
     },
   
@@ -17,6 +19,12 @@ define(["backbone", "handlebars", "views/task"], function(Backbone, Handlebars, 
       this.collection.on('reset', this.addAll, this);
       this.collection.on('all', this.render, this);
     },
+
+    edit: function() {
+            this.$el.addClass("editing-title");
+            this.input.focus();
+            return this;
+        },
 
     render: function() {
       var template = $("#taskcollectiontemplate").html();
@@ -31,8 +39,9 @@ define(["backbone", "handlebars", "views/task"], function(Backbone, Handlebars, 
       // });
 
       var html = compiled(this.collection.attributes);
-      console.log("view collection:", this.collection);
+      // console.log("view collection:", this.collection);
       this.$el.html(html);
+      console.log("appending title: ", this.collection.title);
       this.$el.find("#title").append(this.collection.title).$el;
 
       this.collection.each(function(task) {
@@ -49,6 +58,7 @@ define(["backbone", "handlebars", "views/task"], function(Backbone, Handlebars, 
           this.$el.find("#main").hide();
           this.$el.find("footer").hide();
       }
+      this.input = this.$el.find('.edit-title');//added
       return this;
     },
 
@@ -61,6 +71,22 @@ define(["backbone", "handlebars", "views/task"], function(Backbone, Handlebars, 
 
       addAll: function() {
           this.collection.each(this.addOne, this);
+          return this;
+      },
+      updateTitle: function(){
+        var value = this.input.val();
+        console.log("VALUE: ", value);    
+        console.log("collection: ", this.collection);
+        this.collection.title = value;//??
+        this.collection.updateTitle(value);
+        this.$el.removeClass("editing-title");
+        this.$el.find("#title").text(this.collection.title);
+        // this.render();
+        return this;
+      },
+      updateTitleOnEnter: function(e) {
+          if (e.keyCode == 13)
+            this.updateTitle();
           return this;
       },
 

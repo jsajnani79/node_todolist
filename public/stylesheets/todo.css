@@ -14,6 +14,18 @@ body {
 	-webkit-font-smoothing: antialiased;
 }
 
+h1 {
+    font-family: 'Molengo', Georgia, Times, serif;
+    font-size: 56px;
+    line-height: 80px;
+}
+ 
+p {
+    font-family: 'Lekton', Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    line-height: 25px;
+}
+
 #todoapp {
 	background: #fff;
 	padding: 20px;
@@ -78,7 +90,7 @@ body {
 	border-bottom: none;
 }
 
-#todo-list li.done label {
+#todo-list {
 	color: #777777;
 	text-decoration: line-through;
 }

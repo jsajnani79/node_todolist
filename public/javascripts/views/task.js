@@ -19,7 +19,7 @@ define(["backbone", "handlebars", "jquery", "underscore"], function(Backbone, Ha
       var template = $("#tasktemplate").html();
       var compiled = Handlebars.compile(template);
       Handlebars.registerHelper("isChecked", function(checked) {
-        if(checked) return "checked = \"checked\"";
+        if(checked) return "checked = \"checked\" id=checked";
         else return "";
       });
       var html = compiled(this.model.attributes);
@@ -29,6 +29,7 @@ define(["backbone", "handlebars", "jquery", "underscore"], function(Backbone, Ha
     },
 
     edit: function() {
+          console.log("EDIT CALLED");
             this.$el.addClass("editing");
             this.input.focus();
             return this;
@@ -43,6 +44,11 @@ define(["backbone", "handlebars", "jquery", "underscore"], function(Backbone, Ha
           this.model.save({taskName: value});
           this.$el.removeClass("editing");
         }
+        return this;
+    },
+
+    toggleDone: function() {
+        this.model.save({checked: !this.model.get('checked')});
         return this;
     },
 

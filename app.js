@@ -7,8 +7,8 @@ var bodyParser = require('body-parser');
 
 var routes = require('./routes/index');
 
-var common = require('./routes/common')
-var config = common.config();
+// var common = require('./routes/common')
+// var config = common.config();
 
 var app = express();
 
@@ -27,6 +27,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', routes.index);
+app.post('/', routes.tasks.create);
 app.get('/lists', routes.lists.all);
 app.get('/lists/:id', routes.lists.one);
 app.post('/lists', routes.lists.create);

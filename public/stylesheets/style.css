@@ -1,13 +1,76 @@
 body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  /*background: url('../paper.jpg');*/
+  background: #e5e6e8;
+  color: #111111;
 }
 
 a {
   color: #00B7FF;
 }
 
+h1 {
+    font-family: 'Molengo', Georgia, Times, serif;
+    font-size: 56px;
+    line-height: 80px;
+    text-align: center;
+    color: #ff4a2f;
+}
+ 
+.lekton {
+    font-family: 'Lekton', Helvetica, Arial, sans-serif;
+    font-size: 16px;
+    line-height: 25px;
+}
+
+#help-text{
+	text-align: center;
+}
+
 #initialContent{
 	display: none;
 }
 
+.center-block {  
+  display: block;  
+  margin-right: auto;  
+  margin-left: auto;  
+}  
+
+#todoapp {
+	/*background-color: #fffccc;*/
+	background: url('../paper.jpg');
+	padding: 20px;
+	margin-bottom: 40px;
+	-webkit-box-shadow: rgba(0, 0, 0, 0.2) 0 2px 6px 0;
+	-moz-box-shadow: rgba(0, 0, 0, 0.2) 0 2px 6px 0;
+	-ms-box-shadow: rgba(0, 0, 0, 0.2) 0 2px 6px 0;
+	-o-box-shadow: rgba(0, 0, 0, 0.2) 0 2px 6px 0;
+	box-shadow: rgba(0, 0, 0, 0.2) 0 2px 6px 0;
+	-webkit-border-radius: 0 0 5px 5px;
+	-moz-border-radius: 0 0 5px 5px;
+	-ms-border-radius: 0 0 5px 5px;
+	-o-border-radius: 0 0 5px 5px;
+	border-radius: 0 0 5px 5px;
+}
+
+ label#checked.task-label{
+	color: #777777;
+	text-decoration: line-through;
+}
+
+.edit, .edit-title {
+	display: none;
+}
+
+.editing .edit, .editing-title .edit-title{
+	display: block;
+	width: 444px;
+	padding: 13px 15px 14px 20px;
+	margin: 0;
+}
+
+.editing .view, .editing-title .list-title {
+	display: none;
+}

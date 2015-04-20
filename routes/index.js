@@ -2,22 +2,11 @@ var express = require('express');
 var router = express.Router();
 var fs = require('fs');
 
-// var getData = function(filename, callback){
-// 	console.log('called getData');
-// 	fs.readFile(filename, function(err, data) {
-//   		if(err) return; //FIX
-//   		var obj = JSON.parse(data);
-//   		callback(obj);
-//   	});
-// };
-
-// var callback = function(data){
-// 	console.log("data", data);
-// };
-
 exports.index = function(req,res){
 	var file = fs.readFile('data.json', function(err, data) {
-  		if(err) return; //FIX
+  		if(err){
+        res.render("index")
+      } //FIX
     	res.render("index", {
     		appData: data
     	});
@@ -58,6 +47,7 @@ exports.tasks.all = function(req,res){
       var result = obj.filter(function(obj) {
         return (obj['id'] == listId);
       })[0]["items"];
+      res.header('listtitle', 'hellolist')
       res.json(result);
     });
  }; 
@@ -97,33 +87,15 @@ console.log("FORM DATA: ", formData);
         }
       }
       console.log("CONTAINED: ", contained);
-
+console.log("formdata title: ", formData.title, formData.name);
       if(contained == -1){
         obj.push(formData);
         console.log("PUSHING NEW");
       }else{
         console.log("APPENDING");
-        obj[contained].title = formData.title;
+        obj[contained].name = formData.name;
         obj[contained].items = formData.items;
       }
-
-
-
-      // var result = obj.filter(function(obj) {
-      //   retVal = (obj['id'] == formData.id);
-      
-      // if(retVal.length == 0){
-      //   obj.push(formData);
-      //   console.log("PUSHING NEW");
-      // }else{
-      //   console.log("APPENDING");
-      //   retVal[0].title = formData.title;
-      //   retVal[0].items = formData.items;
-      // }
-      // });
-// callthis();
-    // obj.push(formData[0]);
-    // console.log("formData[0]", JSON.parse(formData)[0]);
     var txt = JSON.stringify(obj);
     console.log("txt: ", txt);
     var filePath = __dirname + '/../data.json';
@@ -143,7 +115,6 @@ console.log("FORM DATA: ", formData);
 exports.tasks.one.create = function(req, res){
   console.log("POST SINGLE TASK CALLED");
   return true;
-  // console.log("request: ", req);
 };
 
  exports.lists.create = function(req, res){
