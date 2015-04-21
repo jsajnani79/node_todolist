@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var fs = require('fs');
 
-var dataFilePath = __dirname + '/../data/data.json';
+var dataFilePath = __dirname + '/../data.json';
 
 exports.lists = {}
 exports.tasks = {}
