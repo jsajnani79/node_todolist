@@ -14,7 +14,7 @@ var writeFile = function(filePath, data){
 };
 
 var readFile = function(filePath, callback, req, res, options, next){
-  if(!fs.existsSync(dataFilePath)){
+  if(!fs.existsSync(dataFilePath)){ //Update to use fs.open
     writeFile(dataFilePath, "");
   }
   fs.readFile(dataFilePath, function(err, data) {
