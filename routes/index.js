@@ -20,6 +20,7 @@ var readFile = function(filePath, callback, req, res, options, next){
   fs.readFile(dataFilePath, function(err, data) {
     if(err){
       next();
+      return;
     } if(data != ""){
       var obj = JSON.parse(data);
       callback(req, res, obj, next);
@@ -28,6 +29,7 @@ var readFile = function(filePath, callback, req, res, options, next){
       writeFile(dataFilePath, formData); //File does not exist yet, create and then append  
     } else {
       next();
+      return;
     }
   });
 };
@@ -42,6 +44,7 @@ var getListById = function(req, res, obj, next){
   })[0];
   if(result == undefined){
     next();
+    return;
   }
   console.log("RESULT: ", result);
   res.json(result);
@@ -54,6 +57,7 @@ var getAllTasks = function(req, res, obj, next){
   })[0];
   if(result == undefined) {
     next();
+    return;
   }
   res.json(result);
 };
@@ -81,6 +85,7 @@ exports.index = function(req,res, next){
     if(err){
       writeFile(dataFilePath, "");
       res.render("index");
+      return;
     }
     res.render("index", {
       appData: data

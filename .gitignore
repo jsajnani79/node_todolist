@@ -1,7 +1,7 @@
 #Items to be excluded from source control:
 
 #Data Files
-data/*
+data.json
 
 # Environment Files
 *.env
