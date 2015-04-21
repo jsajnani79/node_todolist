@@ -7,13 +7,8 @@ var bodyParser = require('body-parser');
 
 var routes = require('./routes/index');
 
-// var common = require('./routes/common')
-// var config = common.config();
-
 var app = express();
 
-// app.listen(config.PORT);
-// app.set('port', config.PORT);
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -30,10 +25,10 @@ app.get('/', routes.index);
 app.post('/', routes.tasks.create);
 app.get('/lists', routes.lists.all);
 app.get('/lists/:id', routes.lists.one);
-app.post('/lists', routes.lists.create);
+// app.post('/lists', routes.lists.create);
 app.get('/lists/:id/tasks', routes.tasks.all);
-app.get('/lists/:id/tasks/:task_id', routes.tasks.one);
-app.put('/lists/:id/tasks/:task_id', routes.tasks.one.create);
+// app.get('/lists/:id/tasks/:task_id', routes.tasks.one);
+// app.put('/lists/:id/tasks/:task_id', routes.tasks.one.create);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -65,6 +60,5 @@ app.use(function(err, req, res, next) {
     error: {}
   });
 });
-
 
 module.exports = app;

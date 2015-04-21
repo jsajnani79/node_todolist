@@ -17,7 +17,11 @@ h1 {
     text-align: center;
     color: #ff4a2f;
 }
- 
+
+.btn{
+
+}
+
 .lekton {
     font-family: 'Lekton', Helvetica, Arial, sans-serif;
     font-size: 16px;
@@ -74,3 +78,4 @@ h1 {
 .editing .view, .editing-title .list-title {
 	display: none;
 }
+

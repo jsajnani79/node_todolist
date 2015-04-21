@@ -53,11 +53,11 @@ define(["backbone", "events", "collections/list", "views/listcollection", "views
       var view = new TaskCollectionView({ collection: todoCollection});
       this._renderView(view);
     },
-    listTasks: function(id){
-      this.singleTodo(id);
-    },
+    // listTasks: function(id){
+    //   this.singleTodo(id);
+    // },
     singleList: function(id) {
-      this.listTasks(id);
+      this.singleTodo(id);
       // this.singleTodo(id);
     }
   });

@@ -2,139 +2,97 @@ var express = require('express');
 var router = express.Router();
 var fs = require('fs');
 
+var dataFilePath = __dirname + '/../data.json';
+
+exports.lists = {}
+exports.tasks = {}
+
+var writeFile = function(filePath, data){
+  fs.writeFile(filePath, data, function(err, data){
+    console.log("WRITING FILE");
+    if (err) throw err;
+  });
+};
+
+var readFile = function(filePath, callback, req, res){
+  fs.readFile('data.json', function(err, data) {
+    if(err){
+      throw err;
+    } else if(data != ""){
+      var obj = JSON.parse(data);
+      callback(req, res, obj);
+    }
+  });
+};
+
+var getAllLists = function(req, res, obj){
+  res.json(obj);
+};
+
+var getListById = function(req, res, obj){
+  var result = obj.filter(function(obj) {
+    return (obj['id'] == listId);
+  })[0];
+  res.json(result);
+};
+
+var getAllTasks = function(req, res, obj){
+  var listId = req.params.id;
+  var result = obj.filter(function(obj) {
+    return (obj['id'] == listId);
+  })[0];
+  res.json(result);
+};
+
+var updateExistingFile = function(req, res, obj){
+  var formData = JSON.parse(req.body.formData)[0];
+  var contained = -1;
+  for (var i=0; i<obj.length; i++) {
+    if (obj[i].id == formData.id) {
+      contained = i;
+      break;
+    }
+  }
+  if(contained == -1){
+    obj.push(formData);
+  }else{
+    obj[contained].name = formData.name;
+    obj[contained].items = formData.items;
+  }
+  writeFile(dataFilePath, JSON.stringify(obj));
+}
+
 exports.index = function(req,res){
 	var file = fs.readFile('data.json', function(err, data) {
-  		if(err){
-        res.render("index")
-      } //FIX
-    	res.render("index", {
-    		appData: data
-    	});
-  	});
+    if(err){
+      res.render("index")
+    } //FIX
+    res.render("index", {
+        appData: data
+    });
+  });
 };
-exports.lists = {}
 
 exports.lists.all = function(req,res){
-  var file = fs.readFile('data.json', function(err, data) {
-  	if(err) return; //FIX
-  	var obj = JSON.parse(data);
-    res.json(obj);
-  });
+  readFile('data.json', getAllLists, req, res);
 };
 
 exports.lists.one = function(req,res){
-	var listId = req.params.id;
-	var file = fs.readFile('data.json', function(err, data) {
-  		if(err) return; //FIX
-  		var obj = JSON.parse(data);
-  		var result = obj.filter(function(obj) {
-  			return (obj['id'] == listId);
-  		})[0];
-    	res.json(result);
-  	});
- }; 
+  readFile('data.json', getListById, req, res);
+}; 
 
-exports.tasks = {}
 exports.tasks.all = function(req,res){
-
-  console.log("REQ, ", req.params);
-
-
-  var listId = req.params.id;
-  var file = fs.readFile('data.json', function(err, data) {
-      if(err) return; //FIX
-      var obj = JSON.parse(data);
-      var result = obj.filter(function(obj) {
-        return (obj['id'] == listId);
-      })[0]["items"];
-      res.header('listtitle', 'hellolist')
-      res.json(result);
-    });
- }; 
-
-exports.tasks.one = function(req,res){
-  var listId = req.params.id;
-  var taskId = req.params.task_id;
-  // console.log(listId, "task:",taskId);
-  var file = fs.readFile('data.json', function(err, data) {
-      if(err) return; //FIX
-      var obj = JSON.parse(data);
-      var result = obj.filter(function(obj) {
-        return (obj['id'] == listId);
-      })[0]["items"];
-
-      result = result.filter(function(result) {
-        return (result['id'] == taskId);
-      })[0];
-      res.json(result);
-    });
- }; 
+  readFile('data.json', getAllTasks, req, res);
+}; 
 
 exports.tasks.create = function(req, res){
-  console.log("POST TASK CALLED");
-  console.log("req formdata: ", req.body.formData);
-  var formData = req.body.formData;
-  var file = fs.readFile('data.json', function(err, data) {
-      if(err) return; //FIX
-      var obj = JSON.parse(data);
-      formData = JSON.parse(formData)[0];
-console.log("FORM DATA: ", formData);
-      var contained = -1;
-      for (var i=0; i<obj.length; i++) {
-        if (obj[i].id == formData.id) {
-          contained = i;
-          break;
-        }
-      }
-      console.log("CONTAINED: ", contained);
-console.log("formdata title: ", formData.title, formData.name);
-      if(contained == -1){
-        obj.push(formData);
-        console.log("PUSHING NEW");
-      }else{
-        console.log("APPENDING");
-        obj[contained].name = formData.name;
-        obj[contained].items = formData.items;
-      }
-    var txt = JSON.stringify(obj);
-    console.log("txt: ", txt);
-    var filePath = __dirname + '/../data.json';
-    fs.writeFile(filePath, txt, function(err, txt){
-      if (err){
-        return console.log(err); //FIX
-      }
- 
-    });
-
-  });
+  if(fs.existsSync(dataFilePath)){ //Will be deprecated, update if possible (fs.open, etc)
+    readFile(dataFilePath, updateExistingFile, req, res);
+  } else{
+    var formData = req.body.formData;
+    writeFile(dataFilePath, formData); //File does not exist yet, create and then append
+  }
   res.render('index.jade');
-  res.end()
-  return true;
+  res.end();
 };
-
-exports.tasks.one.create = function(req, res){
-  console.log("POST SINGLE TASK CALLED");
-  return true;
-};
-
- exports.lists.create = function(req, res){
-
-// read file then, 
-	// var obj = JSON.parse(data);
- //  	obj.push({
- //  		"name": "Todo List 17", 
-	// 	"id": 200,
-	// 	"items": [{"value": "First Item", "checked": false}, {"value": "Second Item", "checked": false}]
- //  	});
-  	// var txt = JSON.stringify(obj);
-  	// console.log(txt);
-  	// var filePath = __dirname + '/../data.json';
-  	// fs.writeFile(filePath, txt, function(err, txt){
-  	// 	if (err){
-  	// 		return console.log(err); //FIX
-  	// 	}
-  	// });
- 	res.json(req.body);
- };
-
 
