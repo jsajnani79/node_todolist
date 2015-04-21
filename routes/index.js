@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var fs = require('fs');
 
-var dataFilePath = __dirname + '/../data.json';
+var dataFilePath = __dirname + '/../data/data.json';
 
 exports.lists = {}
 exports.tasks = {}
@@ -14,7 +14,10 @@ var writeFile = function(filePath, data){
 };
 
 var readFile = function(filePath, callback, req, res, options, next){
-  fs.readFile('data.json', function(err, data) {
+  if(!fs.existsSync(dataFilePath)){
+    writeFile(dataFilePath, "");
+  }
+  fs.readFile(dataFilePath, function(err, data) {
     if(err){
       next();
     } if(data != ""){
@@ -22,13 +25,14 @@ var readFile = function(filePath, callback, req, res, options, next){
       callback(req, res, obj, next);
     } else if(options == 'Append'){
       var formData = req.body.formData;
-        writeFile(dataFilePath, formData); //File does not exist yet, create and then append  
-      }
-    });
+      writeFile(dataFilePath, formData); //File does not exist yet, create and then append  
+    } else {
+      next();
+    }
+  });
 };
 
 var getAllLists = function(req, res, obj, next){
-  // next();
   res.json(obj);
 };
 
@@ -73,9 +77,10 @@ var updateExistingFile = function(req, res, obj, next){
 }
 
 exports.index = function(req,res, next){
-	var file = fs.readFile('data.json', function(err, data) {
+	var file = fs.readFile(dataFilePath, function(err, data) {
     if(err){
-      res.render("index")
+      writeFile(dataFilePath, "");
+      res.render("index");
     }
     res.render("index", {
       appData: data
@@ -84,15 +89,15 @@ exports.index = function(req,res, next){
 };
 
 exports.lists.all = function(req,res, next){
-  readFile('data.json', getAllLists, req, res, {}, next);
+  readFile(dataFilePath, getAllLists, req, res, {}, next);
 };
 
 exports.lists.one = function(req,res, next){
-  readFile('data.json', getListById, req, res, {}, next);
+  readFile(dataFilePath, getListById, req, res, {}, next);
 }; 
 
 exports.tasks.all = function(req,res, next){
-  readFile('data.json', getAllTasks, req, res, {}, next);
+  readFile(dataFilePath, getAllTasks, req, res, {}, next);
 }; 
 
 exports.tasks.create = function(req, res, next){

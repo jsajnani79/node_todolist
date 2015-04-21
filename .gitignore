@@ -1,3 +1,11 @@
-#exclude data files from source control
-/data.json
+#Items to be excluded from source control:
+
+#Data Files
+data/*
+
+# Environment Files
 *.env
+
+# Dependency directory
+# https://www.npmjs.org/doc/misc/npm-faq.html#should-i-check-my-node_modules-folder-into-git
+node_modules
