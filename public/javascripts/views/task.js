@@ -2,17 +2,17 @@ define(["backbone", "handlebars", "jquery", "underscore"], function(Backbone, Ha
   var TaskView = Backbone.View.extend({
 
     events: {
-        "click .toggle"   : "toggleDone",
-        "dblclick .view"  : "edit",
-        "click a.destroy" : "clear",
-        "keypress .edit"  : "updateOnEnter",
-        "blur .edit"      : "close"
+      "click .toggle"   : "toggleDone",
+      "dblclick .view"  : "edit",
+      "click a.destroy" : "clear",
+      "keypress .edit"  : "updateOnEnter",
+      "blur .edit"      : "close"
     },
 
     initialize: function(options) {
-        this.model.on('change', this.render, this);
-        this.model.on('destroy', this.remove, this);
-        return this;
+      this.model.on('change', this.render, this);
+      this.model.on('destroy', this.remove, this);
+      return this;
     },
 
     render: function() {
@@ -29,33 +29,31 @@ define(["backbone", "handlebars", "jquery", "underscore"], function(Backbone, Ha
     },
 
     edit: function() {
-          console.log("EDIT CALLED");
-            this.$el.addClass("editing");
-            this.input.focus();
-            return this;
-        },
+      this.$el.addClass("editing");
+      this.input.focus();
+      return this;
+    },
 
     close: function() {
-        var value = this.input.val();
-        console.log("value: ", value);
-        if (!value) {
-          this.clear();
-        } else {
-          this.model.save({taskName: value});
-          this.$el.removeClass("editing");
-        }
-        return this;
+      var value = this.input.val();
+      if (!value) {
+        this.clear();
+      } else {
+        if (/\d/.test(value) || /[a-zA-Z]/.test(value)) this.model.save({taskName: value});
+        this.$el.removeClass("editing");
+      }
+      return this;
     },
 
     toggleDone: function() {
-        this.model.save({checked: !this.model.get('checked')});
-        return this;
+      this.model.save({checked: !this.model.get('checked')});
+      return this;
     },
 
     updateOnEnter: function(e) {
-        if (e.keyCode == 13)
-            this.close();
-        return this;
+      if (e.keyCode == 13)
+        this.close();
+      return this;
     },
 
     clear: function() {
@@ -66,4 +64,5 @@ define(["backbone", "handlebars", "jquery", "underscore"], function(Backbone, Ha
   });
 
   return TaskView;
+
 });

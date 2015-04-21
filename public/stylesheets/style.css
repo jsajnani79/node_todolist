@@ -1,7 +1,6 @@
 body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-  /*background: url('../paper.jpg');*/
   background: #e5e6e8;
   color: #111111;
 }
@@ -16,10 +15,6 @@ h1 {
     line-height: 80px;
     text-align: center;
     color: #ff4a2f;
-}
-
-.btn{
-
 }
 
 .lekton {
@@ -43,8 +38,7 @@ h1 {
 }  
 
 #todoapp {
-	/*background-color: #fffccc;*/
-	background: url('../paper.jpg');
+	background: url('../img/paper.jpg');
 	padding: 20px;
 	margin-bottom: 40px;
 	-webkit-box-shadow: rgba(0, 0, 0, 0.2) 0 2px 6px 0;
@@ -66,6 +60,23 @@ h1 {
 
 .edit, .edit-title {
 	display: none;
+}
+
+// Block level inputs
+.input-block-level {
+  display: block;
+  width: 100%;
+  min-height: 28px;        // Make inputs at least the height of their button counterpart
+  .box-sizing: border-box; // Makes inputs behave like true block-level elements
+}
+
+/*.list-group-item{
+	max-width: 100%;
+}*/
+
+.text_input{
+	box-sizing: border-box;
+    max-width: 100%;
 }
 
 .editing .edit, .editing-title .edit-title{

@@ -13,8 +13,7 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
-// uncomment after placing your favicon in /public
-//app.use(favicon(__dirname + '/public/favicon.ico'));
+app.use(favicon(__dirname + '/public/img/favicon.ico'));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -23,12 +22,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', routes.index);
 app.post('/', routes.tasks.create);
+
 app.get('/lists', routes.lists.all);
 app.get('/lists/:id', routes.lists.one);
-// app.post('/lists', routes.lists.create);
 app.get('/lists/:id/tasks', routes.tasks.all);
-// app.get('/lists/:id/tasks/:task_id', routes.tasks.one);
-// app.put('/lists/:id/tasks/:task_id', routes.tasks.one.create);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -38,6 +35,27 @@ app.use(function(req, res, next) {
 });
 
 // error handlers
+
+app.use(function(req, res, next){
+  res.status(404);
+
+  // respond with html page
+  if (req.accepts('html')) {
+    res.render('404', { url: req.url });
+    return;
+  }
+
+  // respond with json
+  if (req.accepts('json')) {
+    res.send({ error: 'Not found' });
+    return;
+  }
+
+  // default to plain-text. send()
+  res.type('txt').send('Not found');
+});
+
+
 
 // development error handler
 // will print stacktrace

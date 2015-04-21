@@ -9,42 +9,52 @@ exports.tasks = {}
 
 var writeFile = function(filePath, data){
   fs.writeFile(filePath, data, function(err, data){
-    console.log("WRITING FILE");
     if (err) throw err;
   });
 };
 
-var readFile = function(filePath, callback, req, res){
+var readFile = function(filePath, callback, req, res, options, next){
   fs.readFile('data.json', function(err, data) {
     if(err){
-      throw err;
-    } else if(data != ""){
+      next();
+    } if(data != ""){
       var obj = JSON.parse(data);
-      callback(req, res, obj);
-    }
-  });
+      callback(req, res, obj, next);
+    } else if(options == 'Append'){
+      var formData = req.body.formData;
+        writeFile(dataFilePath, formData); //File does not exist yet, create and then append  
+      }
+    });
 };
 
-var getAllLists = function(req, res, obj){
+var getAllLists = function(req, res, obj, next){
+  // next();
   res.json(obj);
 };
 
-var getListById = function(req, res, obj){
+var getListById = function(req, res, obj, next){
   var result = obj.filter(function(obj) {
     return (obj['id'] == listId);
   })[0];
+  if(result == undefined){
+    next();
+  }
+  console.log("RESULT: ", result);
   res.json(result);
 };
 
-var getAllTasks = function(req, res, obj){
+var getAllTasks = function(req, res, obj, next){
   var listId = req.params.id;
   var result = obj.filter(function(obj) {
     return (obj['id'] == listId);
   })[0];
+  if(result == undefined) {
+    next();
+  }
   res.json(result);
 };
 
-var updateExistingFile = function(req, res, obj){
+var updateExistingFile = function(req, res, obj, next){
   var formData = JSON.parse(req.body.formData)[0];
   var contained = -1;
   for (var i=0; i<obj.length; i++) {
@@ -62,32 +72,32 @@ var updateExistingFile = function(req, res, obj){
   writeFile(dataFilePath, JSON.stringify(obj));
 }
 
-exports.index = function(req,res){
+exports.index = function(req,res, next){
 	var file = fs.readFile('data.json', function(err, data) {
     if(err){
       res.render("index")
-    } //FIX
+    }
     res.render("index", {
-        appData: data
+      appData: data
     });
   });
 };
 
-exports.lists.all = function(req,res){
-  readFile('data.json', getAllLists, req, res);
+exports.lists.all = function(req,res, next){
+  readFile('data.json', getAllLists, req, res, {}, next);
 };
 
-exports.lists.one = function(req,res){
-  readFile('data.json', getListById, req, res);
+exports.lists.one = function(req,res, next){
+  readFile('data.json', getListById, req, res, {}, next);
 }; 
 
-exports.tasks.all = function(req,res){
-  readFile('data.json', getAllTasks, req, res);
+exports.tasks.all = function(req,res, next){
+  readFile('data.json', getAllTasks, req, res, {}, next);
 }; 
 
-exports.tasks.create = function(req, res){
+exports.tasks.create = function(req, res, next){
   if(fs.existsSync(dataFilePath)){ //Will be deprecated, update if possible (fs.open, etc)
-    readFile(dataFilePath, updateExistingFile, req, res);
+    readFile(dataFilePath, updateExistingFile, req, res, 'Append');
   } else{
     var formData = req.body.formData;
     writeFile(dataFilePath, formData); //File does not exist yet, create and then append

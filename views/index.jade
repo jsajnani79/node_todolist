@@ -19,23 +19,23 @@ block content
 		</div>
 
 	script(id="tasktemplate", type="text/x-handlebars")
-		<div class="list-group-item">
+		<div class="list-group-item container-fluid">
 		<div class="view">
 		<input class="toggle" type="checkbox" {{isChecked checked}} />
 		<label class="task-label lekton" {{isChecked checked}}>{{taskName}}</label>
 		<a class="destroy"></a>
 		</div>
-		<input class="edit" type="text" value="{{taskName}}" />
+		<div id="text_input"><input class="edit input-block-level" type="text" value="{{taskName}}" /> </div>
 		<div>
 
 	script(id="taskcollectiontemplate", type="text/x-handlebars")
-		<div id="todoapp" class="container">
+		<div id="todoapp" class="container-fluid">
 		<div class="center-block">
 		<header>
-		<h4 class="list-title" id="title"></h4>
+		<h2 class="list-title" id="title"></h2>
 		<input class="edit-title" type="text" placeholder="What would you like to call this list?" />
 		</br>
-		<input type="text" class="form-control" id="new-todo" placeholder="What do you need to do?">
+		<div id="text_input"> <input type="text input-block-level" class="form-control" id="new-todo" placeholder="What do you need to do?"> </div>
 		</header>
 		<section id="main">
 		<ul class="list-group" id="todo-list"></ul>

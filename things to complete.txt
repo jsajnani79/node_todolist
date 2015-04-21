@@ -1,3 +1,2 @@
 404 routing
-bad data.json file routing
-Passing title into collection
+Input div sizings
